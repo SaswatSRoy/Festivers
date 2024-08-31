@@ -2,7 +2,6 @@
 
 package eu.androidudemyclass.eventaggregatorapp.composables
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,7 +39,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -48,7 +46,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import eu.androidudemyclass.eventaggregatorapp.R
 import eu.androidudemyclass.eventaggregatorapp.model.AuthViewModel
 import eu.androidudemyclass.eventaggregatorapp.model.NavigationItems
 import eu.androidudemyclass.eventaggregatorapp.repository.UserRepository
