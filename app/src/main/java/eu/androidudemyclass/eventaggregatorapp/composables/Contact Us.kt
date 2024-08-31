@@ -54,14 +54,13 @@ import com.example.compose.EventAggregatorAppTheme
 fun ContactUsScreen(
     authViewModel: AuthViewModel
 ) {
-    EventAggregatorAppTheme { // Apply your app theme
-        // Use a bright background color based on your theme
+    EventAggregatorAppTheme {
         val backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(backgroundColor) // Set background color
+                .background(backgroundColor)
                 .padding(16.dp)
         ) {
             Text(
@@ -119,7 +118,7 @@ fun ContactUsScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Direct Contact Information
+
             Text(
                 text = "Or, contact us directly:",
                 color = MaterialTheme.colorScheme.onSurface
@@ -141,30 +140,30 @@ fun ContactUsScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Social Media Links with Animations
+
             Row {
                 AnimatedIcon(
                     iconResourceId = R.drawable.twitter,
                     contentDescription = "Twitter",
-                    onClick = { /* Open Twitter profile */ }
+                    onClick = {  }
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 AnimatedIcon(
                     iconResourceId = R.drawable.facebook,
                     contentDescription = "Facebook",
-                    onClick = { /* Open Facebook profile */ }
+                    onClick = {  }
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 AnimatedIcon(
                     iconResourceId = R.drawable.instagram,
                     contentDescription = "Instagram",
-                    onClick = { /* Open Instagram profile */ }
+                    onClick = {  }
                 )
             }
 
-            Spacer(modifier = Modifier.weight(1f)) // Push FAQ to bottom
+            Spacer(modifier = Modifier.weight(1f))
 
-            // FAQ Section with Improved Visibility
+
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = "Frequently Asked Questions",
@@ -175,7 +174,7 @@ fun ContactUsScreen(
                 val faqItems = listOf(
                 "How do I create an account?" to "Tap on the 'Sign Up' button...",
                 "Can I attend events for free?" to "Some events are free, while others...",
-                // ... more FAQ items
+
             )
 
                 LazyColumn(modifier = Modifier.heightIn(max = 200.dp)) {
@@ -224,6 +223,7 @@ fun AnimatedIcon(
             modifier = Modifier
                 .size(24.dp)
                 .scale(animatedScale.value),
+
 
         )
     }
