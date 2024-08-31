@@ -6,4 +6,6 @@ sealed class ScreenForApp(val route:String) {
     data object Welcome:ScreenForApp("welcome")
     data object AboutUS:ScreenForApp("about_us")
     data object Home:ScreenForApp("home")
+    data object Contact:ScreenForApp("contact")
+
 }

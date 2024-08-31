@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
@@ -35,6 +37,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -55,7 +58,7 @@ import kotlinx.coroutines.launch
 fun HomePage(
     authViewModel: AuthViewModel = viewModel(),
     userRepo: UserRepository ,
-    navController: NavHostController = rememberNavController()
+    onNavigateTo: () -> Unit
 ) {
     val firstName by authViewModel.firstName.observeAsState()
     val items = listOf(
@@ -85,6 +88,7 @@ fun HomePage(
     var selectedItemIndex by remember {
         mutableIntStateOf(0)
     }
+    var selectedTitle by remember { mutableStateOf("Festiverse") }
 
     ModalNavigationDrawer(
         modifier = Modifier
@@ -121,18 +125,21 @@ fun HomePage(
                         selected = index == selectedItemIndex,
                         onClick = {
                             selectedItemIndex = index
+                            selectedTitle = items.title
                             scope.launch {
                                 drawerState.close()
 
                             }
                         },
                         icon = {
-                            Icon(
-                                imageVector = if (index == selectedItemIndex) {
-                                    items.selectedIcon
-                                } else items.unselectedIcon,
-                                contentDescription = items.title
-                            )
+                            IconButton(onClick ={onNavigateTo()}) {
+                                Icon(
+                                    imageVector = if (index == selectedItemIndex) {
+                                        items.selectedIcon
+                                    } else items.unselectedIcon,
+                                    contentDescription = items.title
+                                )
+                            }
                         }
                     )
                 }
@@ -142,21 +149,29 @@ fun HomePage(
     ) {
         Scaffold(
             topBar = {
-                TopAppBar(title = {
-                    Text(text = "Festiverse")
-                },
+                TopAppBar(
+                    title = { Text(text = selectedTitle) },
                     navigationIcon = {
                         IconButton(onClick = {
-                            scope.launch {
-                                drawerState.open()
+                            if (selectedTitle == "Festiverse") {
+                                scope.launch { drawerState.open() }
+                            } else {
+                                onNavigateTo() // Handle back navigation
                             }
                         }) {
-                            Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
+                            Icon(
+                                imageVector = if (selectedTitle == "Festiverse") {
+                                    Icons.Default.Menu
+                                } else {
+                                    Icons.AutoMirrored.Default.ArrowBack
+                                },
+                                contentDescription = if (selectedTitle == "Festiverse") "Menu" else "Back"
+                            )
                         }
                     }
                 )
             }
-        ) {
+        ){
             Column(modifier = Modifier.padding(it)) {
 
             }
@@ -165,8 +180,4 @@ fun HomePage(
 
     }
 }
-@Preview
-@Composable
-fun HomePagePreview(){
-    HomePage(authViewModel = AuthViewModel(), userRepo = UserRepository(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance()))
-}
+

@@ -1,11 +1,8 @@
 package eu.androidudemyclass.eventaggregatorapp.composables
 
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +12,6 @@ import eu.androidudemyclass.eventaggregatorapp.screens.ScreenForApp
 import eu.androidudemyclass.eventaggregatorapp.signUp.SignUpScreen
 import eu.androidudemyclass.signIn.SignInScreen
 
-@RequiresApi (Build.VERSION_CODES.O)
 @Composable
 fun Navigation(
     navController: NavHostController,
@@ -48,7 +44,12 @@ fun Navigation(
             }
         }
         composable(route = ScreenForApp.Home.route) {
-            HomePage(authViewModel, userRepo)
+            HomePage(authViewModel, userRepo) {
+                navController.navigate(ScreenForApp.Contact.route)
+            }
+        }
+        composable(route = ScreenForApp.Contact.route) {
+            ContactUsScreen(authViewModel =authViewModel)
         }
 
 
