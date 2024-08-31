@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -34,6 +35,8 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.androidudemyclass.eventaggregatorapp.R
@@ -53,7 +56,7 @@ fun ContactUsScreen(
 ) {
     EventAggregatorAppTheme { // Apply your app theme
         // Use a bright background color based on your theme
-        val backgroundColor = MaterialTheme.colorScheme.surface
+        val backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
 
         Column(
             modifier = Modifier
@@ -85,7 +88,13 @@ fun ContactUsScreen(
                 onValueChange = { email = it },
                 label = { Text("Email", color = MaterialTheme.colorScheme.onSurfaceVariant) },
                 modifier = Modifier.fillMaxWidth(),
-                textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurface)
+                textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurface),
+                singleLine = true,
+                maxLines = 1,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email
+                )
+
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
@@ -118,6 +127,7 @@ fun ContactUsScreen(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Email: support@eventaggregator.com",
+                style = TextStyle(textDecoration = TextDecoration.Underline),
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.clickable { /* Open email client */ }
             )
@@ -125,6 +135,7 @@ fun ContactUsScreen(
             Text(
                 text = "Phone: +1 (555) 123-4567",
                 color = MaterialTheme.colorScheme.onSurface,
+                style = TextStyle(textDecoration = TextDecoration.Underline),
                 modifier = Modifier.clickable { /* Open phone dialer */ }
             )
 
@@ -213,7 +224,7 @@ fun AnimatedIcon(
             modifier = Modifier
                 .size(24.dp)
                 .scale(animatedScale.value),
-            tint = MaterialTheme.colorScheme.onSurfaceVariant // Use a suitable color
+
         )
     }
 }

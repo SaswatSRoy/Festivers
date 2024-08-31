@@ -156,7 +156,7 @@ fun AboutUsScreen(
             Spacer(modifier = Modifier.padding(16.dp))
 
             AnimatedText(
-                text = aboutUsText.text, // Use the annotated string
+                text = aboutUsText.text+" Join us on this exciting journey!", // Use the annotated string
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onBackground,
                 isVisible = textVisibility
@@ -177,25 +177,13 @@ fun AboutUsScreen(
                     .rotate(imageAngle) // Apply rotation animation
             )
 
-            Spacer(modifier = Modifier.padding(16.dp))
-
-            // Additional Text (Example)
-            AnimatedText(
-                text = "Join us on this exciting journey!",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurface,
-                isVisible = textVisibility
-            )
-
-            Spacer(modifier = Modifier.weight(1f)) // Push the button to the bottom
-
+            Spacer(modifier = Modifier.padding(4.dp))
             AnimatedButton(
                 onClick = onNavigateToSignUp,
                 text = "Sign Up",
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally) // Center the button
-                    .padding(16.dp)
-                    .size(20.dp),
+                    .padding(bottom=8.dp),
                 isVisible = textVisibility
             )
         }

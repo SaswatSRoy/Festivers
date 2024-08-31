@@ -143,7 +143,6 @@ fun SignInScreen(
             )
             Spacer(modifier = Modifier.padding(2.dp))
             Text("Sign Up",
-                style = TextStyle(color = Color.Blue),
                 modifier = Modifier.padding(start = 2.dp).clickable {onNavigateToSignUp()},
                 textDecoration = TextDecoration.Underline
             )
