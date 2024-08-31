@@ -1,11 +1,10 @@
 package eu.androidudemyclass.eventaggregatorapp.repository
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import eu.androidudemyclass.eventaggregatorapp.model.Result
 import eu.androidudemyclass.eventaggregatorapp.model.User
 import kotlinx.coroutines.tasks.await
-import eu.androidudemyclass.eventaggregatorapp.model.Result
 
 class UserRepository(
         private val auth: FirebaseAuth,

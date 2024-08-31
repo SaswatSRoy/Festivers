@@ -1,16 +1,11 @@
 package eu.androidudemyclass.eventaggregatorapp.composables
 
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -30,19 +25,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import eu.androidudemyclass.eventaggregatorapp.R
 import kotlinx.coroutines.delay
 
 
@@ -82,11 +72,10 @@ fun AnimatedSplashScreen(
 
         Row {
             letters.forEachIndexed { index, letter ->
-                val delayMillis = index * 100 // Stagger animation
+                index * 100 // Stagger animation
                 AnimatedLetter(
                     letter = letter,
-                    isAnimating = index == currentLetterIndex,
-                    durationMillis = animationDurations.getOrElse(index) { 500 }
+                    isAnimating = index == currentLetterIndex
 
                 )
             }
@@ -124,7 +113,7 @@ fun AnimatedSplashScreen(
 
 
 @Composable
-fun AnimatedLetter(letter: String, isAnimating: Boolean, durationMillis: Int) {
+fun AnimatedLetter(letter: String, isAnimating: Boolean) {
     val delayMillis = 100 // Delay between animations
 
     var animationStarted by remember { mutableStateOf(false) }
