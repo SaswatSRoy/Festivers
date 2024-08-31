@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "171616747308",
+    "project_id": "event-aggregator-app-ec7a5",
+    "storage_bucket": "event-aggregator-app-ec7a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171616747308:android:e6894eadb0cd60bf5a3689",
+        "android_client_info": {
+          "package_name": "eu.androidudemyclass.eventaggregatorapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWQpw-yJH1gGRv-ljnBl-R96U9o5kUlRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
