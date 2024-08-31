@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -42,6 +43,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,17 +57,28 @@ import kotlinx.coroutines.delay
 fun AboutUsScreen(
     onNavigateToSignUp: () -> Unit,
     authViewModel: AuthViewModel
-) {val aboutUsText = """
-    Welcome to Festiverse! We are your one-stop platform for discovering and attending exciting events happening around you. Our mission is to connect people with experiences that matter. Whether you're into music, art, tech, or anything in between, we've got youcovered. 
+) {
+    val aboutUsText = buildAnnotatedString {
+        append("Welcome to ")
+        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+            append("Festiverse!")
+        }
+        append(" We are your one-stop platform for discovering and attending exciting events happening around you. Our mission is to connect people with experiences that matter. Whether you're into ")
+        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+            append("music, art, tech,")
+        }
+        append(" or anything in between,we've got you covered.\n\n")
 
-    With our app, you can:
-     • Easily browse and search for events based on your interests.
-     • Get personalized recommendations tailored just for you.
-     • Save events to your calendar so you never miss out.
-     • Purchase tickets securely and conveniently.
+        append("With our app, you can:\n")
+        withStyle(style = SpanStyle(textDecoration = TextDecoration.Underline)) {
+            append(" • Easily browse and search for events based on your interests.\n")
+            append(" • Get personalized recommendations tailored just for you.\n")
+            append(" • Save events to your calendar so you never miss out.\n")
+            append(" • Purchase tickets securely and conveniently.\n\n")
+        }
 
-    We're constantly working to improve your experience, so stay tuned for exciting new features!
-""".trimIndent()
+        append("We're constantly working to improve your experience, so stay tuned for exciting new features!")
+    }
 
     var textVisibility by remember { mutableStateOf(false) }
     val textAlpha by animateFloatAsState(
@@ -132,23 +145,23 @@ fun AboutUsScreen(
         Column(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxSize() // Fill the entire screen
-                .verticalScroll(rememberScrollState()) // Allow scrolling if content exceeds screen height
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
             AnimatedText(
                 text = "ABOUT US",
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.headlineLarge, // More prominent headline style
                 modifier = Modifier
-                    .padding(bottom = 8.dp, top= 16.dp)
+                    .padding(bottom = 8.dp, top = 16.dp)
                     .align(Alignment.CenterHorizontally),
-                color = MaterialTheme.colorScheme.background,
+                color = MaterialTheme.colorScheme.primary, // Use primary color for emphasis
                 isVisible = textVisibility
             )
 
             Spacer(modifier = Modifier.padding(16.dp))
 
             AnimatedText(
-                text = aboutUsText,
+                text = aboutUsText.text, // Use the annotated string
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onBackground,
                 isVisible = textVisibility
@@ -186,7 +199,8 @@ fun AboutUsScreen(
                 text = "Sign Up",
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally) // Center the button
-                    .padding(16.dp),
+                    .padding(16.dp)
+                    .size(20.dp),
                 isVisible = textVisibility
             )
         }
