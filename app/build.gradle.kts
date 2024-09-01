@@ -79,6 +79,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-text-google-fonts:1.6.8")
     implementation("androidx.compose.ui:ui:1.x.x")
     implementation("androidx.compose.material3:material3:1.1.1")
+    implementation("org.mongodb:mongodb-driver-sync:4.2.3")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

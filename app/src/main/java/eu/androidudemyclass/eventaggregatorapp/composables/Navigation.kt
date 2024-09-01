@@ -32,8 +32,12 @@ fun Navigation(
                 onNavigateToLogin = {
                     navController.navigate(ScreenForApp.SignIn.route)
                 },
-                authViewModel = authViewModel
+                authViewModel = authViewModel,
+                onNavigateToHome = {
+                    navController.navigate(ScreenForApp.Home.route)
+                }
             )
+
         }
 
         composable(route = ScreenForApp.SignIn.route){
@@ -54,16 +58,6 @@ fun Navigation(
 
 
     }
-    LaunchedEffect(key1 = authViewModel.navigateToHome) {
-        authViewModel.navigateToHome.collect {
-            Log.d("Navigation", "Received navigateToHome signal, navigating to Home")
-            navController.navigate(ScreenForApp.Home.route) {
-                popUpTo(ScreenForApp.SignIn.route) { inclusive = true }
-            }
-        }
-
-    }
-
 
 
 

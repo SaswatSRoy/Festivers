@@ -42,7 +42,7 @@ fun AnimatedSplashScreen(
 ) {
     val text = "FESTIVERSE"
     val letters = text.toCharArray().map { it.toString() }
-    val animationDurations = listOf(500, 600, 700, 800,500, 600, 700, 800, 500, 600) // Adjust durations as needed
+    val animationDurations = listOf(500, 600, 700, 800,500, 600, 700, 800, 500, 600)
     var currentLetterIndex by remember { mutableIntStateOf(0) }
 
 
@@ -63,8 +63,16 @@ fun AnimatedSplashScreen(
         Text(
             text = "WELCOME TO",
             style = MaterialTheme.typography.headlineMedium.copy(
-                fontFamily = FontFamily.Serif, // Example font family
+                fontFamily = FontFamily.Serif,
                 letterSpacing = 2.sp
+            ),
+            modifier = Modifier.background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.secondary
+                    )
+                )
             )
         )
 
@@ -82,7 +90,7 @@ fun AnimatedSplashScreen(
         }
 
 
-        Spacer(modifier = Modifier.height(32.dp)) // Add more space
+        Spacer(modifier = Modifier.height(32.dp))
 
         TextButton(
             onClick = { onNavigateToAboutUs() },
@@ -100,7 +108,7 @@ fun AnimatedSplashScreen(
         }
     }
 
-    // Trigger the animation for the next letter after the current one finishes
+
     LaunchedEffect(key1 = currentLetterIndex) {
         if (currentLetterIndex < letters.size ) {
             delay(animationDurations.getOrElse(currentLetterIndex) { 500 }.toLong())
@@ -120,7 +128,7 @@ fun AnimatedLetter(letter: String, isAnimating: Boolean) {
     val scale by animateFloatAsState(
         targetValue = if (isAnimating && animationStarted) 1.2f else 1f,
         animationSpec = if (isAnimating && animationStarted) {
-            spring(dampingRatio = Spring.DampingRatioMediumBouncy) // Bounce effect
+            spring(dampingRatio = Spring.DampingRatioMediumBouncy)
         } else {
             tween(durationMillis = 0)
         }, label = ""

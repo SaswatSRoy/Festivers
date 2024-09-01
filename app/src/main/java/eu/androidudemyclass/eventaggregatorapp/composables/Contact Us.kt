@@ -55,7 +55,7 @@ fun ContactUsScreen(
     authViewModel: AuthViewModel
 ) {
     EventAggregatorAppTheme {
-        val backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
+        val backgroundColor = MaterialTheme.colorScheme.surfaceBright
 
         Column(
             modifier = Modifier

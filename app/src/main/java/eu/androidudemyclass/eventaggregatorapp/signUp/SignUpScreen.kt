@@ -47,7 +47,7 @@ import eu.androidudemyclass.eventaggregatorapp.repository.UserRepository
 fun SignUpScreen(
     onNavigateToLogin: () -> Unit,
     authViewModel: AuthViewModel,
-
+    onNavigateToHome: () -> Unit
 ){
     var email by remember {
         mutableStateOf("")
@@ -179,10 +179,11 @@ fun SignUpScreen(
             )
         }
 
-        LaunchedEffect(result) {
-            if (result is Result.Success) {
-                authViewModel.onSignInSuccess()
-
+        LaunchedEffect(key1 = authViewModel.navigateToHome) {
+            authViewModel.navigateToHome.collect { navigate ->
+                if (navigate) {
+                    onNavigateToHome() // Call the callback to navigate to home
+                }
             }
         }
 
@@ -191,11 +192,6 @@ fun SignUpScreen(
 
 
     }
-}
-@Preview
-@Composable
-fun SignUpScreenPreview(){
-    SignUpScreen(onNavigateToLogin = {}, authViewModel = AuthViewModel()  )
 }
 
 
