@@ -1,5 +1,6 @@
 package eu.androidudemyclass.eventaggregatorapp.composables
 
+
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -38,16 +39,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.compose.EventAggregatorAppTheme
 import eu.androidudemyclass.eventaggregatorapp.R
 import eu.androidudemyclass.eventaggregatorapp.model.AuthViewModel
-
-
-
-import com.example.compose.EventAggregatorAppTheme
-
-
-
 
 
 @Composable
@@ -55,7 +49,7 @@ fun ContactUsScreen(
     authViewModel: AuthViewModel
 ) {
     EventAggregatorAppTheme {
-        val backgroundColor = MaterialTheme.colorScheme.surfaceBright
+        val backgroundColor = MaterialTheme.colorScheme.surfaceContainerHighest
 
         Column(
             modifier = Modifier

@@ -1,9 +1,8 @@
 package eu.androidudemyclass.eventaggregatorapp.signUp
 
-import eu.androidudemyclass.eventaggregatorapp.model.AuthViewModel
 
-
-
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,42 +11,42 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import eu.androidudemyclass.eventaggregatorapp.R
+import eu.androidudemyclass.eventaggregatorapp.model.AuthViewModel
 import eu.androidudemyclass.eventaggregatorapp.model.Result
-import eu.androidudemyclass.eventaggregatorapp.repository.UserRepository
 
 
 @Composable
 fun SignUpScreen(
     onNavigateToLogin: () -> Unit,
     authViewModel: AuthViewModel,
-    onNavigateToHome: () -> Unit
+
 ){
     var email by remember {
         mutableStateOf("")
@@ -74,6 +73,17 @@ fun SignUpScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Image(painter = painterResource(id = R.drawable.festiverse),
+            contentDescription= "Logo",
+            modifier = Modifier
+                .size(150.dp)
+                .clip(CircleShape)
+                .border(3.dp, Color.Black, CircleShape)
+                .padding(4.dp),
+            alignment = Alignment.Center
+
+
+        )
         OutlinedTextField(
             value = email,
             onValueChange = {email=it},
@@ -179,11 +189,10 @@ fun SignUpScreen(
             )
         }
 
-        LaunchedEffect(key1 = authViewModel.navigateToHome) {
-            authViewModel.navigateToHome.collect { navigate ->
-                if (navigate) {
-                    onNavigateToHome() // Call the callback to navigate to home
-                }
+        LaunchedEffect(result) {
+            if (result is Result.Success) {
+                authViewModel.onSignInSuccess()
+
             }
         }
 
@@ -192,6 +201,11 @@ fun SignUpScreen(
 
 
     }
+}
+@Preview
+@Composable
+fun SignUpScreenPreview(){
+    SignUpScreen(onNavigateToLogin = {}, authViewModel = AuthViewModel()  )
 }
 
 

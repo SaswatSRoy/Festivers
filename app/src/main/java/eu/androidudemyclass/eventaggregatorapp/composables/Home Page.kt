@@ -53,12 +53,10 @@ import eu.androidudemyclass.eventaggregatorapp.model.NavigationItems
 import eu.androidudemyclass.eventaggregatorapp.repository.UserRepository
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePage(
     authViewModel: AuthViewModel = viewModel(),
-    userRepo: UserRepository,
-    username: String, // Add username parameter
+    userRepo: UserRepository ,
     onNavigateTo: () -> Unit
 ) {
     val firstName by authViewModel.firstName.observeAsState()
@@ -79,29 +77,29 @@ fun HomePage(
             unselectedIcon = Icons.Outlined.MoreVert,
         ),
     )
+
+
     LaunchedEffect(key1 = Unit) {
         authViewModel.fetchFirstName()
     }
-
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    var selectedItemIndex by remember { mutableIntStateOf(0) }
+    var selectedItemIndex by remember {
+        mutableIntStateOf(0)
+    }
     var selectedTitle by remember { mutableStateOf("Festiverse") }
-
-    // Custom Drawer Shape
     val drawerShape = RoundedCornerShape(topEnd = 24.dp, bottomEnd = 24.dp)
 
     ModalNavigationDrawer(
         modifier = Modifier
             .width(300.dp),
-
         drawerContent = {
             ModalDrawerSheet(
                 drawerTonalElevation = 0.dp,
                 drawerContainerColor = MaterialTheme.colorScheme.background,
-                drawerShape =  drawerShape
+                drawerShape = drawerShape
+
             ) {
-                // Header with Gradient Background
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -109,7 +107,8 @@ fun HomePage(
                         .background(
                             brush = Brush.verticalGradient(
                                 colors = listOf(
-                                    MaterialTheme.colorScheme.primary,MaterialTheme.colorScheme.secondary
+                                    MaterialTheme.colorScheme.primary,
+                                    MaterialTheme.colorScheme.secondary
                                 )
                             )
                         )
@@ -122,7 +121,7 @@ fun HomePage(
                             imageVector = Icons.Filled.AccountCircle,
                             contentDescription = "Account",
                             modifier = Modifier.size(40.dp),
-                            tint = MaterialTheme.colorScheme.onPrimary
+                            tint = MaterialTheme.colorScheme.onPrimary // High contrast icon color
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         firstName?.let { name ->
@@ -134,31 +133,32 @@ fun HomePage(
                         }
                     }
                 }
-
-                // Navigation Items with Spacers
                 Spacer(modifier = Modifier.height(16.dp))
-                items.forEachIndexed { index, item ->
+
+                items.forEachIndexed { index, items ->
                     NavigationDrawerItem(
                         label = {
-                            Text(
-                                text = item.title,
-                                style = MaterialTheme.typography.bodyLarge
-                            )
+                            Text(text = items.title)
                         },
                         selected = index == selectedItemIndex,
                         onClick = {
                             selectedItemIndex = index
-                            selectedTitle = item.title
-                            scope.launch { drawerState.close() }
+                            selectedTitle = items.title
+                            scope.launch {
+                                drawerState.close()
+
+                            }
                         },
                         icon = {
-                            Icon(
-                                imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
-                                contentDescription = item.title,
-                                tint = if (index == selectedItemIndex) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        },
-                        modifier = Modifier.padding(vertical = 8.dp)
+                            IconButton(onClick ={onNavigateTo()}) {
+                                Icon(
+                                    imageVector = if (index == selectedItemIndex) {
+                                        items.selectedIcon
+                                    } else items.unselectedIcon,
+                                    contentDescription = items.title
+                                )
+                            }
+                        }
                     )
                 }
             }
@@ -174,27 +174,28 @@ fun HomePage(
                             if (selectedTitle == "Festiverse") {
                                 scope.launch { drawerState.open() }
                             } else {
-                                onNavigateTo()
+                                onNavigateTo() // Handle back navigation
                             }
                         }) {
                             Icon(
-                                imageVector = if (selectedTitle == "Festiverse"){
+                                imageVector = if (selectedTitle == "Festiverse") {
                                     Icons.Default.Menu
-                                } else { Icons.AutoMirrored.Filled.ArrowBack },
+                                } else {
+                                    Icons.AutoMirrored.Default.ArrowBack
+                                },
                                 contentDescription = if (selectedTitle == "Festiverse") "Menu" else "Back"
                             )
                         }
                     }
                 )
             }
-        ) { paddingValues ->
-            Column(modifier = Modifier.padding(paddingValues)) {
-                // Display the username
-                Text("Welcome, $username!")
+        ){
+            Column(modifier = Modifier.padding(it)) {
 
-                // ... your other content for the home screen
             }
+
         }
+
     }
 }
 

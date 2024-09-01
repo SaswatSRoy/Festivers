@@ -1,5 +1,7 @@
 package eu.androidudemyclass.signIn
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import eu.androidudemyclass.eventaggregatorapp.model.AuthViewModel
 
 
@@ -12,6 +14,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -27,24 +31,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.firestore.FirebaseFirestore
+import eu.androidudemyclass.eventaggregatorapp.R
 import eu.androidudemyclass.eventaggregatorapp.model.Result
-import eu.androidudemyclass.eventaggregatorapp.repository.UserRepository
 
 
 @Composable
 fun SignInScreen(
-    onNavigateToSignUp:()->Unit, authViewModel: AuthViewModel, onSignInSuccess:()->Unit
+    onNavigateToSignUp: () -> Unit, authViewModel: AuthViewModel
 ) {
     val result by authViewModel.authResult.observeAsState()
     var email by remember {
@@ -68,7 +72,19 @@ fun SignInScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
 
+
     ) {
+        Image(painter = painterResource(id = R.drawable.festiverse),
+            contentDescription= "Logo",
+            modifier = Modifier
+                .size(250.dp)
+                .clip(CircleShape)
+                .border(3.dp, Color.Black, CircleShape)
+                .padding(4.dp),
+            alignment = Alignment.Center
+
+
+        )
         OutlinedTextField(
             value = email,
             onValueChange = {email=it},
@@ -143,7 +159,9 @@ fun SignInScreen(
             )
             Spacer(modifier = Modifier.padding(2.dp))
             Text("Sign Up",
-                modifier = Modifier.padding(start = 2.dp).clickable {onNavigateToSignUp()},
+                modifier = Modifier
+                    .padding(start = 2.dp)
+                    .clickable { onNavigateToSignUp() },
                 textDecoration = TextDecoration.Underline
             )
         }
@@ -177,5 +195,5 @@ fun SignInScreen(
 @Preview
 @Composable
 fun SignInScreenPreview(){
-    SignInScreen(onNavigateToSignUp = {}, authViewModel = AuthViewModel(), onSignInSuccess = {})
+    SignInScreen(onNavigateToSignUp = {}, authViewModel = AuthViewModel())
 }

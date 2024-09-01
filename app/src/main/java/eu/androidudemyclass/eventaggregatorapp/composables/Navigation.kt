@@ -32,10 +32,7 @@ fun Navigation(
                 onNavigateToLogin = {
                     navController.navigate(ScreenForApp.SignIn.route)
                 },
-                authViewModel = authViewModel,
-                onNavigateToHome = {
-                    navController.navigate(ScreenForApp.Home.route)
-                }
+                authViewModel = authViewModel
             )
 
         }
@@ -43,9 +40,7 @@ fun Navigation(
         composable(route = ScreenForApp.SignIn.route){
             SignInScreen(onNavigateToSignUp = {
                 navController.navigate(ScreenForApp.SignUp.route)
-            }, authViewModel = authViewModel) {
-
-            }
+            }, authViewModel = authViewModel)
         }
         composable(route = ScreenForApp.Home.route) {
             HomePage(authViewModel, userRepo) {
@@ -58,6 +53,16 @@ fun Navigation(
 
 
     }
+    LaunchedEffect(key1 = authViewModel.navigateToHome) {
+        authViewModel.navigateToHome.collect {
+            Log.d("Navigation", "Received navigateToHome signal, navigating to Home")
+            navController.navigate(ScreenForApp.Home.route) {
+                popUpTo(ScreenForApp.SignIn.route) { inclusive = true }
+            }
+        }
+
+    }
+
 
 
 
